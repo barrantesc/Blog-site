@@ -1,6 +1,6 @@
 // include packages and models that we'll need to create the Express.js API endpoints
 const router = require('express').Router();
-const { Post, User } = require('../../models');
+const { Post, User, Comment } = require('../../models');
 
 
 // get all users
@@ -8,16 +8,30 @@ router.get('/', (req, res) => {
     console.log('======================');
     Post.findAll({
       // Query configuration
-      attributes: ['id', 'post_url', 'title', 'created_at'],
+      attributes: [
+        'id',
+        'title',
+        'created_at',
+        'post_content'
+      ],
       order: [['created_at', 'DESC']],
       // include JOIN to the User table
       include: [
+        // include the Comment model here:
+        {
+          model: Comment,
+          attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+          include: {
+            model: User,
+            attributes: ['username']
+          }
+        },
         {
           model: User,
           attributes: ['username']
         }
       ]
-    })
+     })
     .then(dbPostData => res.json(dbPostData))
     .catch(err => {
       console.log(err);
@@ -31,11 +45,19 @@ router.get('/:id', (req, res) => {
     where: {
       id: req.params.id
     },
-    attributes: ['id', 'post_url', 'title', 'created_at'],
     include: [
       {
-        model: User,
-        attributes: ['username']
+        model: Post,
+        attributes: ['id', 'title', 'post_url', 'created_at']
+      },
+      // include the Comment model here:
+      {
+        model: Comment,
+        attributes: ['id', 'comment_text', 'created_at'],
+        include: {
+          model: Post,
+          attributes: ['title']
+        }
       }
     ]
   })
