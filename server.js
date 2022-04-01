@@ -27,7 +27,7 @@ app.engine('handlebars', hbs.engine);
 
 
 app.set('view engine', 'handlebars');
-app.set('views', path.join(__dirname, './views/layouts'));
+app.set('views', path.join(__dirname, './views/'));
 
 app.get('/', (req, res, next) => {
   res.render('home', {layout: true});
