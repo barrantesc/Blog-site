@@ -1,11 +1,24 @@
+// Server connection
 const router = require('express').Router();
-
-const apiRoutes = require('./api/');
+// API routes folder
+const apiRoutes = require('./api');
+// Homepage routes
 const homeRoutes = require('./home-routes.js');
+// Dashboard Routes
 const dashboardRoutes = require('./dashboard-routes.js');
 
-router.use('/dashboard', dashboardRoutes);
-router.use('/', homeRoutes);
+// Define the path for the server for the API routes
 router.use('/api', apiRoutes);
+
+// Define the path for the home page
+router.use('/', homeRoutes);
+
+// Define the path for the dashboard
+router.use('/dashboard', dashboardRoutes);
+
+// Define a catch-all route for any resource that doesn't exist
+router.use((req, res) => {
+  res.status(404).end();
+});
 
 module.exports = router;
