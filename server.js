@@ -3,6 +3,8 @@ const path = require('path');
 
 //-- Express
 const express = require('express');
+//-- Defining APP template engine - Using Handelbars
+const exphbs = require('express-handlebars');
 const routes = require('./controllers');
 const sequelize = require('./config/connection');
 
@@ -18,12 +20,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 // turn on routes
 app.use(routes);
 
-//-- Defining APP template engine - Using Handelbars
-const exphbs = require('express-handlebars');
+
 const hbs = exphbs.create({});
 
 app.engine('handlebars', hbs.engine);
+
+
 app.set('view engine', 'handlebars');
+app.set('views', path.join(__dirname, './views/layouts'));
+
+app.get('/', (req, res, next) => {
+  res.render('home', {layout: true});
+});
 
 // turn on connection to db and server
 sequelize.sync({ force: false }).then(() => {
