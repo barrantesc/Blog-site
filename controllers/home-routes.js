@@ -4,6 +4,7 @@ const { Post, User, Comment } = require('../models');
 
 // Render the home page
 router.get('/', (req, res) => {
+  console.log('======================');
     Post.findAll({
         // Query configuration
         // From the Post table, include the post ID, URL, title, and the timestamp from post creation
