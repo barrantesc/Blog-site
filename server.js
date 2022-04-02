@@ -45,7 +45,7 @@ app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, './views/'));
 
 app.get('/', (req, res, next) => {
-  res.render('home', {layout: true});
+  res.render('homepage', {layout: true});
 });
 
 // turn on connection to db and server
