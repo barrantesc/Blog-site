@@ -4,13 +4,10 @@
 
 *A mysql database and CMS-style Blog built using Model View Controller (MVC) paradigm. Built using MySQL2, Express, Sequelize, Handlebars and dotenv*
 
-### Application Deployment
 
+### Application 
 
-
-### Application Screenshot
-
-![]()
+[![screenshot of dashboard](./assets/img/example.png)](https://apricot-crisp-65302.herokuapp.com/)
   
 ### User Story
 
