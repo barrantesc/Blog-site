@@ -7,10 +7,24 @@ const session = require('express-session')
 //-- Defining APP template engine - Using Handelbars
 const exphbs = require('express-handlebars');
 
+const app = express();
+
 const routes = require('./controllers');
 const sequelize = require('./config/connection');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
-const app = express();
+const sess = {
+  secret: 'Super secret secret',
+  cookie: {},
+  resave: false,
+  saveUninitialized: true,
+  store: new SequelizeStore({
+    db: sequelize
+  })
+};
+
+app.use(session(sess));
+
 const PORT = process.env.PORT || 3001;
 
 //-- Feeding Express server info it needs to be used
